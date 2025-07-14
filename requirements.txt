@@ -1,0 +1,9 @@
+cv2==4.12.0
+numpy==1.26.4
+matplotlib==3.10.3
+patchify==patchify
+Pillow==11.3.0
+scikit-learn==1.7.0
+pandas==2.3.1
+torch==2.7.1
+torchvision==0.22.1
