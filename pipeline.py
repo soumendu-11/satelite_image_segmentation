@@ -26,7 +26,7 @@ def main():
 
     # Step 2: Run CAM visualization (for all classes, saving PNGs)
     subprocess.run([
-        "python", "unet_CAM.py",
+        "python", "unet_Seg-Grad-CAM.py",
         "--data_dir", args.data_dir,
         "--model_path", "unet_model.pth",
         "--output_dir", args.output_dir
