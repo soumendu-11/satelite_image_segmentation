@@ -1,0 +1,40 @@
+# =========================
+# Paths
+# =========================
+paths:
+  train_csv: "train.csv"
+  val_csv: "val.csv"
+  output_dir: "distilbert-base-uncased-lora-text-classification"
+  logging_dir: "./logs"
+
+# =========================
+# Model
+# =========================
+model:
+  checkpoint: "distilbert-base-uncased"
+  max_seq_length: 512
+  num_labels: null  # will infer from data
+
+# =========================
+# Training
+# =========================
+training:
+  learning_rate: 0.001
+  per_device_train_batch_size: 8
+  per_device_eval_batch_size: 8
+  num_train_epochs: 3
+  weight_decay: 0.01
+  evaluation_strategy: "epoch"
+  logging_steps: 10
+  save_strategy: "epoch"
+
+# =========================
+# LoRA Config
+# =========================
+lora:
+  r: 4
+  alpha: 32
+  dropout: 0.01
+  target_modules: ["q_lin"]
+  task_type: "SEQ_CLS"
+
