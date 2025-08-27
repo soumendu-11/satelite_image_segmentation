@@ -1,17 +1,19 @@
 # To run python pipeline.py --data_dir . --epochs 3 --batch_size 4 --output_dir cam_results
 
 # =========================
-# Local Training Pipeline for 3 nodes
+# Local Training Pipeline for 4 nodes
 # =========================
 import argparse
 import subprocess
 
 def parse_args():
-    parser = argparse.ArgumentParser("Local Training Pipeline for 3 nodes")
+    parser = argparse.ArgumentParser("Local Training Pipeline for 4 nodes")
     parser.add_argument("--data_dir", type=str, required=True, help="Dataset directory")
     parser.add_argument("--epochs", type=int, default=3, help="Number of training epochs")
     parser.add_argument("--batch_size", type=int, default=4, help="Batch size for training")
     parser.add_argument("--output_dir", type=str, default="pipeline_outputs", help="Directory to save outputs")
+    parser.add_argument("--test_file", type=str, default="test.csv", help="Path to test.csv for prediction")
+    parser.add_argument("--prediction_file", type=str, default="prediction.csv", help="Path to save predictions")
     return parser.parse_args()
 
 
@@ -47,6 +49,17 @@ def main():
         "--epochs", str(args.epochs),
         "--batch_size", str(args.batch_size),
         "--output_dir", args.output_dir
+    ], check=True)
+
+    # =========================
+    # Step 4: Run prediction.py
+    # =========================
+    print("Running prediction.py ...")
+    subprocess.run([
+        "python", "prediction.py",
+        "--test_file", args.test_file,
+        "--output_dir", args.output_dir,
+        "--prediction_file", args.prediction_file
     ], check=True)
 
     print("Pipeline execution completed!")
