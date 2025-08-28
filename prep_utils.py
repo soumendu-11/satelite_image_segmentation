@@ -1,3 +1,4 @@
+
 # =========================
 # prep_utils.py
 # =========================
@@ -30,7 +31,7 @@ def clean_text(text: str) -> str:
 def analyze_dataframe(csv_path: str, save_path: str = "df_final_1.csv"):
     """
     Reads a CSV, cleans the 'Text' column, prints and removes duplicates and nulls,
-    performs analysis, and saves the final cleaned dataframe.
+    performs analysis, saves the final cleaned dataframe, and plots distributions.
     """
     # Load dataframe
     df_final = pd.read_csv(csv_path)
@@ -80,9 +81,24 @@ def analyze_dataframe(csv_path: str, save_path: str = "df_final_1.csv"):
 
     print(f"Percentage of rows with token count > 512: {percentage_exceeding_512:.2f}%")
 
+    # =========================
+    # NEW: Plot Label frequency distribution
+    # =========================
+    if 'Label' in df_final.columns:
+        fig_label = px.histogram(
+            df_final,
+            x='Label',
+            title='Label Frequency Distribution',
+            color='Label',
+            text_auto=True
+        )
+        fig_label.update_layout(xaxis_title="Label", yaxis_title="Count")
+        fig_label.show()
+    else:
+        print("\n⚠️ Warning: No 'Label' column found in the dataframe. Skipping label distribution plot.")
+
     # Save final cleaned dataframe
     df_final.to_csv(save_path, index=False)
     print(f"\nCleaned dataframe saved as '{save_path}'")
 
     return df_final
-
